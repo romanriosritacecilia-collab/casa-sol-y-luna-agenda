@@ -2,13 +2,92 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Casa Sol y Luna - Agenda</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casa Sol y Luna | Agenda</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f8f5ed;color:#35473e;font-family:Arial,sans-serif}
+header{background:#315c4b;color:white;text-align:center;padding:32px 16px}
+header h1{margin:0;font-size:30px}
+header p{margin:10px 0 0;color:#e5d9ad}
+main{max-width:760px;margin:auto;padding:20px}
+.card{background:white;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 3px 14px #00000010}
+h2{color:#315c4b;font-size:21px}
+label{display:block;margin:12px 0 5px}
+input,select{width:100%;padding:12px;border:1px solid #cbd4ce;border-radius:9px;font-size:16px}
+button{background:#315c4b;color:white;border:0;border-radius:9px;padding:13px 20px;margin-top:15px;font-size:16px;width:100%}
+.resultado{background:#edf4ee;border-radius:12px;padding:15px;margin-top:16px}
+.numero{font-size:26px;font-weight:bold;color:#315c4b}
+.nota{font-size:13px;color:#64736b}
+footer{text-align:center;padding:24px;color:#64736b}
+</style>
 </head>
 <body>
-  <h1>Casa Sol y Luna</h1>
-  <h2>Agenda de citas</h2>
-  <p>Bienvenida al sistema de administración.</p>
+<header>
+<h1>☀️ Casa Sol y Luna 🌙</h1>
+<p>Bienestar, armonía y cuidado</p>
+</header>
+<main>
+<section class="card">
+<h2>Panel de administración</h2>
+<p>Bienvenida a tu agenda profesional.</p>
+<p>Control de consultas y aportaciones de los profesionistas.</p>
+<p class="nota">Versión de demostración. No introduzcas datos reales de pacientes.</p>
+</section>
+<section class="card">
+<h2>Calculadora de consultas</h2>
+<label>Servicio</label>
+<select id="servicio">
+<option>Psicología</option>
+<option>Nutrición</option>
+<option>Fisioterapia</option>
+</select>
+<label>Precio de cada consulta ($)</label>
+<input id="precio" type="number" min="0" value="350">
+<label>Consultas atendidas durante la semana</label>
+<input id="cantidad" type="number" min="0" value="10">
+<button onclick="calcular()">Calcular corte semanal</button>
+<div class="resultado" id="resultado"></div>
+</section>
+<section class="card">
+<h2>Yoga · Corte mensual</h2>
+<p>Mensualidad por alumna: $500</p>
+<p>Aportación a Casa Sol y Luna: $100 por alumna</p>
+<label>Número de alumnas</label>
+<input id="alumnas" type="number" min="0" value="10">
+<button onclick="calcularYoga()">Calcular corte mensual</button>
+<div class="resultado" id="resultadoYoga"></div>
+</section>
+<section class="card">
+<h2>Próximas funciones</h2>
+<p>Registro de citas, acceso individual de profesionistas, reportes semanales, historial de pagos y panel privado de administración.</p>
+</section>
+</main>
+<footer>Casa Sol y Luna · Agenda profesional</footer>
+<script>
+const dinero=n=>new Intl.NumberFormat("es-MX",{style:"currency",currency:"MXN"}).format(n);
+function calcular(){
+const precio=Number(document.getElementById("precio").value);
+const cantidad=Number(document.getElementById("cantidad").value);
+if(precio<0||cantidad<0||!Number.isInteger(cantidad)){alert("Revisa los valores");return;}
+const total=precio*cantidad;
+document.getElementById("resultado").innerHTML=
+"<p>Total de consultas: "+cantidad+"</p>"+
+"<p>Ingresos: "+dinero(total)+"</p>"+
+"<p>Casa Sol y Luna (30%):</p><div class='numero'>"+dinero(total*.30)+"</div>"+
+"<p>Profesionista (70%): "+dinero(total*.70)+"</p>";
+}
+function calcularYoga(){
+const alumnas=Number(document.getElementById("alumnas").value);
+if(alumnas<0||!Number.isInteger(alumnas)){alert("Revisa el número de alumnas");return;}
+document.getElementById("resultadoYoga").innerHTML=
+"<p>Mensualidades: "+dinero(alumnas*500)+"</p>"+
+"<p>Casa Sol y Luna:</p><div class='numero'>"+dinero(alumnas*100)+"</div>"+
+"<p>Instructora: "+dinero(alumnas*400)+"</p>";
+}
+calcular();
+calcularYoga();
+</script>
 </body>
 </html>
