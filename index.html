@@ -89,5 +89,34 @@ document.getElementById("resultadoYoga").innerHTML=
 calcular();
 calcularYoga();
 </script>
-</body>
+  <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAc4FErQZi7ZgHS_PV7dlbZH24ZFMZtvGE",
+  authDomain: "casa-sol-y-luna--agenda.firebaseapp.com",
+  projectId: "casa-sol-y-luna--agenda",
+  storageBucket: "casa-sol-y-luna--agenda.firebasestorage.app",
+  messagingSenderId: "57575675115",
+  appId: "1:57575675115:web:f6cf23bbd6a6d7753bdaae",
+  measurementId: "G-L65R7MHCTK"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const adminUID = "H7Y6GtbGDtfja91r1sFH1V1x8NA3";
+
+onAuthStateChanged(auth, (user) => {
+  if (user && user.uid === adminUID) {
+    console.log("Administradora autorizada");
+  } else {
+    console.log("Sin sesión de administradora");
+  }
+});
+</script>
+</body>  
 </html>
